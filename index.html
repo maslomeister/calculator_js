@@ -3,11 +3,43 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, user-scalable=1.0" />
+    <meta name="theme-color" content="#c9f9fd" />
     <title>Calculator</title>
     <link rel="stylesheet" href="styles.css" />
+    <script defer type="module" src="index.js"></script>
   </head>
   <body>
-    <div></div>
+    <div class="container">
+      <div class="calculator">
+        <div class="calculator-display">
+          <div class="calculator-display-history">
+            <div class="calculator-display-history-wrapper"></div>
+          </div>
+          <div class="calculator-display-current"></div>
+        </div>
+        <div class="calculator-controls">
+          <button data-clear-all class="operator-delete noselect">C</button>
+          <button data-delete class="operator noselect">DEL</button>
+          <button data-percent class="operator noselect">%</button>
+          <button data-operation class="operator noselect">/</button>
+          <button data-number class="noselect">7</button>
+          <button data-number class="noselect">8</button>
+          <button data-number class="noselect">9</button>
+          <button data-operation class="operator noselect">*</button>
+          <button data-number class="noselect">4</button>
+          <button data-number class="noselect">5</button>
+          <button data-number class="noselect">6</button>
+          <button data-operation class="operator noselect">-</button>
+          <button data-number class="noselect">1</button>
+          <button data-number class="noselect">2</button>
+          <button data-number class="noselect">3</button>
+          <button data-operation class="operator noselect">+</button>
+          <button data-number class="noselect">0</button>
+          <button data-number class="noselect">.</button>
+          <button data-result class="span-two operator noselect">=</button>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
