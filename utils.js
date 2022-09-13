@@ -13,14 +13,18 @@ export function isOperatorStronger(operation1, operation2) {
   return false;
 }
 
-function countDecimals(number) {
+export function countDecimals(number) {
   if (Math.floor(number) === number) return 0;
   return number.toString().split(".")[1].length || 0;
 }
 
 export function roundNum(num, decimalPlaces = 0) {
   if (num.toString().includes("e")) {
-    return num.toPrecision(2);
+    if (num < 1 && num > -1) {
+      return num.toFixed(8);
+    } else {
+      return num.toPrecision(2);
+    }
   }
 
   if (countDecimals(num) <= decimalPlaces) return num;
@@ -62,3 +66,22 @@ export function createColoredNode(strArray) {
   });
   return parent;
 }
+
+Number.prototype.noExponents = function () {
+  var data = String(this).split(/[eE]/);
+  if (data.length == 1) return data[0];
+
+  var z = "",
+    sign = this < 0 ? "-" : "",
+    str = data[0].replace(".", ""),
+    mag = Number(data[1]) + 1;
+
+  if (mag < 0) {
+    z = sign + "0.";
+    while (mag++) z += "0";
+    return z + str.replace(/^\-/, "");
+  }
+  mag -= str.length;
+  while (mag--) z += "0";
+  return str + z;
+};

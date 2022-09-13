@@ -1,4 +1,9 @@
-import { roundNum, isOperator, isOperatorStronger } from "./utils.js";
+import {
+  roundNum,
+  countDecimals,
+  isOperator,
+  isOperatorStronger,
+} from "./utils.js";
 
 let currentValue = "";
 let currentEquation = [];
@@ -84,7 +89,7 @@ export const computeEquation = () => {
 
     if (isNaN(val2)) {
       arr.splice(operationIndex - 1, 2);
-      arr.splice(operationIndex - 1, 0, val1);
+      arr.splice(operationIndex - 1, 0, roundNum(val1, 8));
     } else {
       const result = computeValues(val1, val2, currentOperation);
       if (result.error) {
@@ -103,7 +108,11 @@ export const computeEquation = () => {
 };
 
 export const appendNumberToCurrentValue = (value) => {
-  if (currentValue.length > 14) return currentValue;
+  if (
+    currentValue.length > 14 ||
+    (currentValue.includes(".") && countDecimals(currentValue) >= 8)
+  )
+    return currentValue;
   if (value === "." && currentValue.includes(".")) return currentValue;
   if (value === "0" && currentValue === "0") return currentValue;
   if (currentValue === "0" && value !== "0" && value !== ".") currentValue = "";
