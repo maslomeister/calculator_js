@@ -20,6 +20,9 @@ const equalsButton = document.querySelector("[data-result]");
 const reverseSignButton = document.querySelector("[data-reverse-sign]");
 const clearAllButton = document.querySelector("[data-clear-all]");
 const historyDisplayElem = document.querySelector(
+  ".calculator-display-history"
+);
+const historyDisplayWrapperElem = document.querySelector(
   ".calculator-display-history-wrapper"
 );
 const currDisplayElem = document.querySelector(
@@ -165,10 +168,10 @@ function updateCurrentDisplayEquation(strArray) {
 }
 
 function addToDisplayHistory(strArray) {
-  historyDisplayElem.appendChild(createColoredNode(strArray));
-  historyDisplayElem.scrollIntoView();
+  historyDisplayWrapperElem.appendChild(createColoredNode(strArray));
+  historyDisplayElem.scrollTop = historyDisplayWrapperElem.scrollHeight;
 }
 
 function resetDisplayHistory() {
-  historyDisplayElem.textContent = "";
+  historyDisplayWrapperElem.textContent = "";
 }
