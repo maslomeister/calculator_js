@@ -33,10 +33,6 @@ export const calculatePercent = () => {
 };
 
 const computeValues = (val1, val2, operation) => {
-  if (val2 === 0) {
-    return { error: true };
-  }
-
   let result = 0;
 
   switch (operation) {
@@ -50,6 +46,9 @@ const computeValues = (val1, val2, operation) => {
       result = val1 * val2;
       break;
     case "/":
+      if (val2 === 0) {
+        return { error: true };
+      }
       result = val1 / val2;
       break;
   }
@@ -107,6 +106,7 @@ export const appendNumberToCurrentValue = (value) => {
   if (currentValue.length > 14) return currentValue;
   if (value === "." && currentValue.includes(".")) return currentValue;
   if (value === "0" && currentValue === "0") return currentValue;
+  if (currentValue === "0" && value !== "0" && value !== ".") currentValue = "";
 
   currentValue = currentValue + value;
 
