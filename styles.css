@@ -56,6 +56,10 @@ body {
   font-family: "JetBrains Mono", Lucida Console;
 }
 
+p {
+  margin: 0;
+}
+
 .noselect {
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none; /* iOS Safari */
@@ -63,8 +67,7 @@ body {
   -khtml-user-select: none; /* Konqueror HTML */
   -moz-user-select: none; /* Old versions of Firefox */
   -ms-user-select: none; /* Internet Explorer/Edge */
-  user-select: none; /* Non-prefixed version, currently
-                                  supported by Chrome, Edge, Opera and Firefox */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
 }
 
 button {
@@ -136,7 +139,7 @@ button {
 }
 
 .calculator-display {
-  min-height: 100px;
+  height: 0px;
   flex-basis: 60%;
   display: flex;
   flex-direction: column;
@@ -147,16 +150,17 @@ button {
 }
 
 .calculator-display-history {
-  flex: 1;
+  flex: 1 1 auto;
+  overflow-y: auto;
+  height: 0px;
   font-size: 1.2rem;
   padding-bottom: 0.8rem;
   display: flex;
-  flex-basis: 10%;
-  justify-content: flex-end;
+  justify-content: flex-start;
   align-items: flex-end;
-  overflow-y: scroll;
   color: #d9d9d9;
   gap: 0.5rem;
+  direction: rtl;
   scrollbar-width: none; /* Firefox */
   -webkit-mask-image: linear-gradient(to top, black 50%, transparent 100%);
   mask-image: linear-gradient(to top, black 50%, transparent 100%);
@@ -166,7 +170,22 @@ button {
   display: none; /* Safari and Chrome */
 }
 
-.calculator-display-current {
+.calculator-display-history-wrapper {
+  direction: ltr;
+  width: 100%;
+}
+
+.calculator-display-current-equation {
+  font-size: 1.2rem;
+  font-weight: 700;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  overflow: hidden;
+  word-break: break-all;
+}
+
+.calculator-display-current-value {
   min-height: 2.8rem;
   font-size: 2rem;
   font-weight: 700;
