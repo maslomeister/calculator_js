@@ -32,7 +32,12 @@ const currEquationDisplayElem = document.querySelector(
 
 const clearDisplay = () => {
   if (isCurrentValueNotNull()) {
-    updateCurrentDisplayValue(clearCurrentValue());
+    if (getEquation().length >= 2) {
+      clearCurrentValue();
+      updateCurrentDisplayValue(computeEquation(), true);
+    } else {
+      updateCurrentDisplayValue(clearCurrentValue());
+    }
   } else {
     updateCurrentDisplayEquation(clearCurrentEquation());
     updateCurrentDisplayValue(clearCurrentValue());
@@ -41,7 +46,7 @@ const clearDisplay = () => {
 };
 
 const displayPercentage = () => {
-  if (currDisplayElem.textContent && isCurrentValueNotNull()) {
+  if (isCurrentValueNotNull()) {
     updateCurrentDisplayValue(calculatePercent());
   }
 };
