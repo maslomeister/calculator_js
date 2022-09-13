@@ -35,7 +35,7 @@ const clearDisplay = () => {
     updateCurrentDisplayValue(clearCurrentValue());
   } else {
     updateCurrentDisplayEquation(clearCurrentEquation());
-    updateCurrentDisplayValue("");
+    updateCurrentDisplayValue(clearCurrentValue());
     resetDisplayHistory();
   }
 };
@@ -51,6 +51,8 @@ const displayNumber = (value) => {
 };
 
 const displayOperator = (value) => {
+  if (getEquation().length === 0 && !isCurrentValueNotNull()) return;
+
   updateCurrentDisplayValue(addCurrentValueToEquation());
 
   updateCurrentDisplayEquation(addOrReplaceLatestOperatorInEquation(value));
