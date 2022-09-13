@@ -55,6 +55,19 @@ const displayOperator = (value) => {
 
   updateCurrentDisplayValue(addCurrentValueToEquation());
 
+  if (computeEquation() === "Error") {
+    updateCurrentDisplayValue(clearCurrentValue());
+    const resultArray = getEquation();
+
+    const result = computeEquation();
+
+    resultArray.push("=", result, ";");
+    addToDisplayHistory(resultArray);
+
+    updateCurrentDisplayEquation(resetEquation());
+    return;
+  }
+
   updateCurrentDisplayEquation(addOrReplaceLatestOperatorInEquation(value));
 
   updateCurrentDisplayValue(computeEquation(), true);
@@ -148,6 +161,7 @@ function updateCurrentDisplayEquation(strArray) {
 
 function addToDisplayHistory(strArray) {
   historyDisplayElem.appendChild(createColoredNode(strArray));
+  historyDisplayElem.scrollIntoView();
 }
 
 function resetDisplayHistory() {
