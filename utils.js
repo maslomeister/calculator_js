@@ -1,5 +1,18 @@
 const ALLOWED_OPERATORS = ["/", "*", "+", "-"];
 
+const OPERATOR_POWER = new Map([
+  ["+", 0],
+  ["-", 0],
+  ["*", 1],
+  ["/", 2],
+]);
+
+export function isOperatorStronger(operation1, operation2) {
+  if (OPERATOR_POWER.get(operation1) > OPERATOR_POWER.get(operation2))
+    return true;
+  return false;
+}
+
 function countDecimals(number) {
   if (Math.floor(number) === number) return 0;
   return number.toString().split(".")[1].length || 0;
@@ -22,56 +35,30 @@ export function isOperator(symbol) {
   return false;
 }
 
-export function colorOperators(history) {
-  return history.reduce((acc, current) => {
-    let curr = current;
+function createColoredOperator(operator) {
+  const span = document.createElement("span");
+  span.style.color = "#9fdcf8";
+  span.textContent = ` ${operator} `;
+  return span;
+}
 
+function createColoredSeparator() {
+  const span = document.createElement("span");
+  span.style.color = "#ff8e8c";
+  span.textContent = ";";
+  return span;
+}
+
+export function createColoredNode(strArray) {
+  const parent = document.createElement("p");
+  strArray.map((current) => {
     if (isOperator(current) || current === "=") {
-      curr = `<span style="color:#9fdcf8">${current}</span>`;
+      parent.appendChild(createColoredOperator(current));
+    } else if (current === ";") {
+      parent.appendChild(createColoredSeparator());
+    } else {
+      parent.appendChild(document.createTextNode(current));
     }
-
-    if (curr === ";") {
-      curr = `<span style="color:#ff8e8c">${current}</span>`;
-    }
-
-    return acc + " " + curr;
-  }, "");
-}
-
-export const OPERATOR_POWER = new Map([
-  ["+", 0],
-  ["-", 0],
-  ["*", 1],
-  ["/", 2],
-]);
-
-export function isOperatorStronger(operation1, operation2) {
-  if (OPERATOR_POWER.get(operation1) > OPERATOR_POWER.get(operation2))
-    return true;
-  return false;
-}
-
-export function computeValues(val1, val2, operation) {
-  if (val2 === 0) {
-    return { error: true };
-  }
-
-  let value = 0;
-
-  switch (operation) {
-    case "+":
-      value = val1 + val2;
-      break;
-    case "-":
-      value = val1 - val2;
-      break;
-    case "*":
-      value = val1 * val2;
-      break;
-    case "/":
-      value = val1 / val2;
-      break;
-  }
-
-  return { error: false, value: roundNum(value, 8).toString() };
+  });
+  return parent;
 }
