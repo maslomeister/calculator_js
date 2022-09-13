@@ -151,7 +151,7 @@ button {
 
 .calculator-display-history {
   flex: 1 1 auto;
-  overflow-y: auto;
+  overflow-y: hidden;
   height: 0px;
   font-size: 1.2rem;
   padding-bottom: 0.8rem;
@@ -161,16 +161,22 @@ button {
   color: #d9d9d9;
   gap: 0.5rem;
   direction: rtl;
-  scrollbar-width: none; /* Firefox */
-  -webkit-mask-image: linear-gradient(to top, black 50%, transparent 100%);
-  mask-image: linear-gradient(to top, black 50%, transparent 100%);
+  scrollbar-width: none;
+  -webkit-mask-image: linear-gradient(to top, black 60%, transparent 100%);
+  mask-image: linear-gradient(to top, black 60%, transparent 100%);
 }
 
 .calculator-display-history::-webkit-scrollbar {
-  display: none; /* Safari and Chrome */
+  display: none;
+}
+
+.calculator-display-history:hover {
+  overflow-y: scroll;
+  cursor: ns-resize;
 }
 
 .calculator-display-history-wrapper {
+  height: 0px;
   direction: ltr;
   width: 100%;
 }
@@ -182,7 +188,6 @@ button {
   justify-content: flex-end;
   align-items: flex-end;
   overflow: hidden;
-  word-break: break-all;
 }
 
 .calculator-display-current-value {
