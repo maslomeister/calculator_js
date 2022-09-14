@@ -14,24 +14,24 @@ export const isOperatorStronger = (operation1, operation2) => {
 };
 
 export const countDecimals = (number) => {
-  if (Math.floor(number) === number) return 0;
-  return number.toString().split(".")[1].length || 0;
+  const str = number.toString();
+  if (str.indexOf(".") !== -1 && str.indexOf("-") !== -1) {
+    return str.split("-")[1] || 0;
+  } else if (str.indexOf(".") !== -1) {
+    return str.split(".")[1].length || 0;
+  }
+  return str.split("-")[1] || 0;
 };
 
 export const roundNum = (num, decimalPlaces = 0) => {
+  if (num === 0) return 0;
   if (num.toString().includes("e")) {
-    if (num < 1 && num > -1) {
-      return num.toFixed(8);
-    } else {
-      return num.toPrecision(2);
-    }
+    return num.toPrecision(2);
   }
 
   if (countDecimals(num) <= decimalPlaces) return num;
 
-  var p = Math.pow(10, decimalPlaces);
-  var n = num * p * (1 + Number.EPSILON);
-  return Math.round(n) / p;
+  return Number.isInteger(num) ? num : Number(num.toFixed(8)).toString();
 };
 
 export const isOperator = (symbol) => {

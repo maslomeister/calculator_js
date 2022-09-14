@@ -13,6 +13,10 @@ export const isCurrentValueNotNull = () => {
   return false;
 };
 
+export const changeCurrentValue = (value) => {
+  currentValue = value;
+};
+
 export const getEquation = () => {
   return currentEquation;
 };
@@ -27,9 +31,12 @@ const replaceLatestElemOfEquation = (elem) => {
 };
 
 export const reverseSign = () => {
-  const reversed = (parseFloat(currentValue) * -1).toString();
-  currentValue = reversed;
-  return reversed;
+  if (parseFloat(currentValue) > 0) {
+    currentValue = "-" + currentValue;
+  } else {
+    currentValue = (parseFloat(currentValue) * -1).toString();
+  }
+  return currentValue;
 };
 
 export const calculatePercent = () => {
@@ -113,7 +120,15 @@ export const appendNumberToCurrentValue = (value) => {
     (currentValue.includes(".") && countDecimals(currentValue) >= 8)
   )
     return currentValue;
-  if (value === "." && currentValue.includes(".")) return currentValue;
+
+  if (value === ".") {
+    if (!isCurrentValueNotNull()) {
+      return "0.";
+    }
+    if (currentValue.includes(".")) {
+      return currentValue;
+    }
+  }
   if (value === "0" && currentValue === "0") return currentValue;
   if (currentValue === "0" && value !== "0" && value !== ".") currentValue = "";
 
@@ -123,7 +138,7 @@ export const appendNumberToCurrentValue = (value) => {
 };
 
 export const addCurrentValueToEquation = () => {
-  if (currentValue) {
+  if (isCurrentValueNotNull()) {
     currentEquation.push(currentValue);
     return clearCurrentValue();
   } else {
