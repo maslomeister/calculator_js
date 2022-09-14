@@ -101,7 +101,7 @@ const displayEquals = () => {
   }
 };
 
-calculatorControls.addEventListener("click", function (e) {
+calculatorControls.addEventListener("click", (e) => {
   if (e.target.closest("[data-number]")) {
     displayNumber(e.target.closest("[data-number]").textContent);
   }
@@ -138,7 +138,7 @@ document.addEventListener("keyup", (event) => {
   if (event.key === "%") {
     displayPercentage();
   }
-  if (event.key.match(/\=/) || event.key === "Enter") {
+  if (event.key.match(/\=/)) {
     displayEquals();
   }
   if (event.key === "Backspace") {
@@ -146,7 +146,7 @@ document.addEventListener("keyup", (event) => {
   }
 });
 
-function updateCurrentDisplayValue(str, preview = false) {
+const updateCurrentDisplayValue = (str, preview = false) => {
   if (preview) {
     currDisplayElem.style.color = "#e8e8e859";
   } else {
@@ -158,20 +158,20 @@ function updateCurrentDisplayValue(str, preview = false) {
   if (!isCurrentValueNotNull()) {
     clearAllButton.textContent = "AC";
   }
-}
+};
 
-function updateCurrentDisplayEquation(strArray) {
+const updateCurrentDisplayEquation = (strArray) => {
   currEquationDisplayElem.textContent = "";
   if (strArray) {
     currEquationDisplayElem.appendChild(createColoredNode(strArray));
   }
-}
+};
 
-function addToDisplayHistory(strArray) {
+const addToDisplayHistory = (strArray) => {
   historyDisplayWrapperElem.appendChild(createColoredNode(strArray));
   historyDisplayElem.scrollTop = historyDisplayWrapperElem.scrollHeight;
-}
+};
 
-function resetDisplayHistory() {
+const resetDisplayHistory = () => {
   historyDisplayWrapperElem.textContent = "";
-}
+};
