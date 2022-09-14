@@ -1,6 +1,7 @@
 import {
   roundNum,
   countDecimals,
+  countDigits,
   isOperator,
   isOperatorStronger,
 } from "./utils.js";
@@ -116,7 +117,7 @@ export const computeEquation = () => {
 
 export const appendNumberToCurrentValue = (value) => {
   if (
-    currentValue.length > 14 ||
+    countDigits(parseFloat(currentValue)) > 14 ||
     (currentValue.includes(".") && countDecimals(currentValue) >= 8)
   )
     return currentValue;

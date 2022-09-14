@@ -14,13 +14,25 @@ export const isOperatorStronger = (operation1, operation2) => {
 };
 
 export const countDecimals = (number) => {
-  const str = number.toString();
+  const str = number < 0 ? number.toString().substring(1) : number.toString();
+
   if (str.indexOf(".") !== -1 && str.indexOf("-") !== -1) {
     return str.split("-")[1] || 0;
   } else if (str.indexOf(".") !== -1) {
     return str.split(".")[1].length || 0;
   }
   return str.split("-")[1] || 0;
+};
+
+export const countDigits = (number) => {
+  const str = number < 0 ? number.toString().substring(1) : number.toString();
+
+  if (str.indexOf(".") !== -1 && str.indexOf("-") !== -1) {
+    return str.split("-")[1] || 0;
+  } else if (str.indexOf(".") !== -1) {
+    return str.split(".")[1].length + str.split(".")[0].length || 0;
+  }
+  return str.length || 0;
 };
 
 export const roundNum = (num, decimalPlaces = 0) => {
