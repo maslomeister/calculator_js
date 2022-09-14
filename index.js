@@ -1,5 +1,6 @@
 import {
   isCurrentValueNotNull,
+  changeCurrentValue,
   getEquation,
   reverseSign,
   calculatePercent,
@@ -49,8 +50,15 @@ const clearDisplay = () => {
 };
 
 const displayPercentage = () => {
-  if (isCurrentValueNotNull()) {
-    updateCurrentDisplayValue(calculatePercent());
+  if (currDisplayElem.textContent) {
+    if (isCurrentValueNotNull()) {
+      updateCurrentDisplayValue(calculatePercent());
+    } else {
+      if (getEquation().length > 0) {
+        changeCurrentValue(currDisplayElem.textContent);
+        updateCurrentDisplayValue(calculatePercent());
+      }
+    }
   }
 };
 
@@ -115,8 +123,15 @@ clearAllButton.addEventListener("click", () => {
 });
 
 reverseSignButton.addEventListener("click", () => {
-  if (currDisplayElem.textContent && isCurrentValueNotNull()) {
-    updateCurrentDisplayValue(reverseSign());
+  if (currDisplayElem.textContent) {
+    if (isCurrentValueNotNull()) {
+      updateCurrentDisplayValue(reverseSign());
+    } else {
+      if (getEquation().length > 0) {
+        changeCurrentValue(currDisplayElem.textContent);
+        updateCurrentDisplayValue(reverseSign());
+      }
+    }
   }
 });
 
@@ -162,9 +177,8 @@ const updateCurrentDisplayValue = (str, preview = false) => {
 
 const updateCurrentDisplayEquation = (strArray) => {
   currEquationDisplayElem.textContent = "";
-  if (strArray) {
-    currEquationDisplayElem.appendChild(createColoredNode(strArray));
-  }
+  currEquationDisplayElem.appendChild(createColoredNode(strArray));
+  historyDisplayElem.scrollTop = historyDisplayWrapperElem.scrollHeight;
 };
 
 const addToDisplayHistory = (strArray) => {
