@@ -1,3 +1,5 @@
+const DISPLAY_MAX_NUMBERS = 14;
+
 const ALLOWED_OPERATORS = ["/", "*", "+", "-"];
 
 const OPERATOR_POWER = new Map([
@@ -41,7 +43,12 @@ export const roundNum = (num, decimalPlaces = 0) => {
     return num.toPrecision(2);
   }
 
-  if (countDecimals(num) <= decimalPlaces) return num;
+  if (countDigits(num) > DISPLAY_MAX_NUMBERS && countDecimals(num) <= 8)
+    num = num.toExponential(2);
+
+  if (countDecimals(num) <= decimalPlaces) {
+    return num;
+  }
 
   return Number.isInteger(num) ? num : Number(num.toFixed(8)).toString();
 };

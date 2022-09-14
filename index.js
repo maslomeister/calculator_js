@@ -1,6 +1,7 @@
 import {
   isCurrentValueNotNull,
   changeCurrentValue,
+  equalsReset,
   getEquation,
   reverseSign,
   calculatePercent,
@@ -69,7 +70,8 @@ const displayNumber = (value) => {
 const displayOperator = (value) => {
   if (getEquation().length === 0 && !isCurrentValueNotNull()) return;
 
-  updateCurrentDisplayValue(addCurrentValueToEquation());
+  addCurrentValueToEquation();
+  updateCurrentDisplayValue(clearCurrentValue());
 
   if (computeEquation() === "Error") {
     updateCurrentDisplayValue(clearCurrentValue());
@@ -97,10 +99,18 @@ const displayEquals = () => {
 
     if (!isCurrentValueNotNull() && resultArray.length <= 2) return;
 
-    updateCurrentDisplayValue(addCurrentValueToEquation());
+    addCurrentValueToEquation();
+
     resultArray = getEquation();
 
     const result = computeEquation();
+
+    if (result === "Error") {
+      updateCurrentDisplayValue(clearCurrentValue());
+    } else {
+      equalsReset();
+      updateCurrentDisplayValue(changeCurrentValue(result));
+    }
 
     resultArray.push("=", result, ";");
     addToDisplayHistory(resultArray);

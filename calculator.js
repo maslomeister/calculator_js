@@ -8,6 +8,7 @@ import {
 
 let currentValue = "";
 let currentEquation = [];
+let shouldResetCalculations = false;
 
 export const isCurrentValueNotNull = () => {
   if (currentValue) return true;
@@ -16,6 +17,11 @@ export const isCurrentValueNotNull = () => {
 
 export const changeCurrentValue = (value) => {
   currentValue = value;
+  return currentValue;
+};
+
+export const equalsReset = () => {
+  shouldResetCalculations = true;
 };
 
 export const getEquation = () => {
@@ -116,15 +122,21 @@ export const computeEquation = () => {
 };
 
 export const appendNumberToCurrentValue = (value) => {
+  if (shouldResetCalculations) {
+    shouldResetCalculations = false;
+    currentValue = "";
+  }
+
   if (
-    countDigits(parseFloat(currentValue)) > 14 ||
+    countDigits(parseFloat(currentValue)) > 15 ||
     (currentValue.includes(".") && countDecimals(currentValue) >= 8)
   )
     return currentValue;
 
   if (value === ".") {
     if (!isCurrentValueNotNull()) {
-      return "0.";
+      currentValue = "0.";
+      return currentValue;
     }
     if (currentValue.includes(".")) {
       return currentValue;
@@ -141,7 +153,6 @@ export const appendNumberToCurrentValue = (value) => {
 export const addCurrentValueToEquation = () => {
   if (isCurrentValueNotNull()) {
     currentEquation.push(currentValue);
-    return clearCurrentValue();
   } else {
     if (isOperator(getLatestElemOfEquation())) {
       currentEquation.pop();
