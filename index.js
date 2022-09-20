@@ -17,10 +17,8 @@ import {
 import { isOperator, createColoredNode } from "./utils.js";
 
 const calculatorControls = document.querySelector(".calculator-controls");
-const percentButton = document.querySelector("[data-percent]");
-const equalsButton = document.querySelector("[data-result]");
-const reverseSignButton = document.querySelector("[data-reverse-sign]");
 const clearAllButton = document.querySelector("[data-clear-all]");
+
 const historyDisplayElem = document.querySelector(
   ".calculator-display-history"
 );
@@ -121,36 +119,32 @@ const displayEquals = () => {
 
 calculatorControls.addEventListener("click", (e) => {
   if (e.target.closest("[data-number]")) {
-    displayNumber(e.target.closest("[data-number]").textContent);
+    displayNumber(e.target.textContent);
   }
   if (e.target.closest("[data-operation]")) {
-    displayOperator(e.target.closest("[data-operation]").textContent);
+    displayOperator(e.target.textContent);
   }
-});
-
-clearAllButton.addEventListener("click", () => {
-  clearDisplay();
-});
-
-reverseSignButton.addEventListener("click", () => {
-  if (currDisplayElem.textContent) {
-    if (isCurrentValueNotNull()) {
-      updateCurrentDisplayValue(reverseSign());
-    } else {
-      if (getEquation().length > 0) {
-        changeCurrentValue(currDisplayElem.textContent);
+  if (e.target.closest("[data-clear-all]")) {
+    clearDisplay();
+  }
+  if (e.target.closest("[data-reverse-sign]")) {
+    if (currDisplayElem.textContent) {
+      if (isCurrentValueNotNull()) {
         updateCurrentDisplayValue(reverseSign());
+      } else {
+        if (getEquation().length > 0) {
+          changeCurrentValue(currDisplayElem.textContent);
+          updateCurrentDisplayValue(reverseSign());
+        }
       }
     }
   }
-});
-
-equalsButton.addEventListener("click", () => {
-  displayEquals();
-});
-
-percentButton.addEventListener("click", () => {
-  displayPercentage();
+  if (e.target.closest("[data-equals]")) {
+    displayEquals();
+  }
+  if (e.target.closest("[data-percent]")) {
+    displayPercentage();
+  }
 });
 
 document.addEventListener("keyup", (event) => {
